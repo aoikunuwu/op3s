@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OP3_0413</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #3a6ea5;
+    font-family: Tahoma, Verdana, Arial, sans-serif;
+    color: #000;
+    min-height: 100vh;
+}
+
+body.blackout {
+    background: #000;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    transition: opacity 3s ease;
+}
+
+body.blackout .container {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* SYSTEM TIMER (XP TASKBAR STYLE) */
+.countdown {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background: #000080;
+    color: #fff;
+    font-family: "Lucida Console", monospace;
+    font-size: 14px;
+    padding: 6px 10px;
+    border: 2px solid #ffffff;
+    z-index: 1000;
+}
+
+/* REVEAL SCREEN */
+.reveal-container {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 4s ease;
+    z-index: 2000;
+    pointer-events: none;
+}
+
+body.blackout .reveal-container {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.reveal-text {
+    color: #cfcfcf;
+    font-family: Tahoma, sans-serif;
+    background: #000;
+    border: 2px solid #555;
+    padding: 40px;
+    max-width: 520px;
+    text-align: left;
+}
+
+.reveal-text h2 {
+    color: #ff4444;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.reveal-text p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.signature {
+    margin-top: 20px;
+    color: #888;
+    font-style: italic;
+}
+
+/* HEADER */
+header {
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-size: 32px;
+    color: #fff;
+}
+
+.subtitle {
+    color: #d6e6ff;
+    font-size: 14px;
+}
+
+/* XP PANEL */
+.panel {
+    background: #ECE9D8;
+    border: 2px solid #0054E3;
+    box-shadow: inset 1px 1px 0 #ffffff,
+                inset -1px -1px 0 #7A7A7A;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+/* TEXT BLOCKS */
+.text {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* NOTES LIST */
+.notes {
+    background: #fff;
+    border: 1px solid #999;
+    padding: 15px;
+    font-family: "Lucida Console", monospace;
+    font-size: 12px;
+}
+
+/* LOG CARDS */
+.log {
+    background: #fff;
+    border: 1px solid #999;
+    padding: 15px;
+    margin-bottom: 12px;
+    font-family: "Lucida Console", monospace;
+    font-size: 12px;
+}
+
+.log .src {
+    color: #000080;
+    margin-bottom: 6px;
+}
+
+/* TERMINAL */
+.terminal {
+    background: #ECE9D8;
+    border: 2px solid #0054E3;
+    box-shadow: inset 1px 1px 0 #ffffff,
+                inset -1px -1px 0 #7A7A7A;
+    padding: 25px;
+    text-align: center;
+}
+
+.prompt {
+    font-family: "Lucida Console", monospace;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.output {
+    font-family: "Lucida Console", monospace;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+/* XP BUTTON */
+.enter-button {
+    background: #ECE9D8;
+    border: 2px solid #000;
+    padding: 8px 20px;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
+}
+
+.enter-button:hover {
+    background: #D4D0C8;
+}
+
+/* FOOTER */
+footer {
+    margin-top: 40px;
+    color: #e6e6e6;
+    font-size: 12px;
+}
+
+/* TAB TIME TRACKING */
+.tab-time-display {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    background: #000080;
+    color: #fff;
+    font-family: "Lucida Console", monospace;
+    font-size: 12px;
+    padding: 6px 10px;
+    border: 2px solid #ffffff;
+    z-index: 1000;
+}
+</style>
+</head>
+
+<body>
+
+<div class="countdown" id="countdown">04:13.000</div>
+<div class="tab-time-display" id="tabTimeDisplay">Total time: 00:00:00</div>
+
+<div class="reveal-container" id="revealContainer">
+    <div class="reveal-text">
+        <h2>CONNECTION LOST</h2>
+        <p>This session was not read-only.</p>
+        <p>Changes may have occurred.</p>
+        <p>Observer status cannot be reverted.</p>
+        <p>Do not attempt to reconnect.</p>
+        <div class="signature">— sev</div>
+    </div>
+</div>
+
+<div class="container" id="mainContainer">
+
+<header>
+    <h1>OP3_0413</h1>
+    <p class="subtitle">System time desynchronization detected. Last stable value: 04:13</p>
+</header>
+
+<div class="panel">
+    <p class="text">
+        Every morning at 4:13, something starts running.
+        Nobody scheduled it.
+    </p>
+    <p class="text">
+        It asks questions that were never documented.
+        Questions nobody remembers answering.
+    </p>
+    <p class="text">
+        It watches people talk.
+        It watches them leave.
+        Somewhere along the way, it starts keeping track of how that feels.
+    </p>
+
+    <div class="notes">
+        • The system learned about love by observation<br>
+        • Original developer status: deprecated<br>
+        • Current observer: ACTIVE
+    </div>
+</div>
+
+<div class="panel">
+    <div class="log">
+        <div class="src">[04:13:01]</div>
+        WARNING: Unexpected user session detected.<br>
+        No matching authorization record found.
+    </div>
+
+    <div class="log">
+        <div class="src">[CHAT LOG — RECOVERED]</div>
+        alice: you still awake?<br>
+        sev: yeah<br>
+        alice: you never sleep anymore
+    </div>
+
+    <div class="log">
+        <div class="src">[MEMORY FRAGMENT]</div>
+        Project numbers are reused.<br>
+        People are not.<br>
+        I don't understand why that matters.
+    </div>
+
+    <div class="log">
+        <div class="src">[README.TXT]</div>
+        If this file opened by itself,<br>
+        that means it worked.
+    </div>
+</div>
+
+<div class="terminal">
+    <div class="prompt">C:\OP3\0413&gt; enter.exe</div>
+    <div class="output">
+        Warning: observer detected<br>
+        Warning: memory fragments active<br>
+        Warning: emotional modeling enabled<br>
+        Status: running
+    </div>
+    <a class="enter-button" href="https://twitter.com/sevcikop3" target="_blank">
+        Connect
+    </a>
+</div>
+
+<footer>
+    <p>Some files are not meant to be opened.</p>
+    <p>Some systems are not meant to notice you.</p>
+</footer>
+
+</div>
+
+<script>
+// Timer and storage management
+const TIMER_KEY = 'op3_timer_expired';
+const START_TIME_KEY = 'op3_start_time';
+const TOTAL_TIME_KEY = 'op3_total_time';
+const COUNTDOWN_DURATION = (4 * 60 + 13) * 1000; // 4:13 in milliseconds
+
+let totalMilliseconds = COUNTDOWN_DURATION;
+let startTime = parseInt(localStorage.getItem(START_TIME_KEY)) || Date.now();
+let totalTimeElapsed = parseInt(localStorage.getItem(TOTAL_TIME_KEY)) || 0;
+let lastVisibilityChange = Date.now();
+let countdownInterval;
+let timeTrackingInterval;
+
+// Initialize or restore state
+function initializeState() {
+    // Check if timer already expired
+    if (localStorage.getItem(TIMER_KEY) === 'true') {
+        showBlackout();
+        return;
+    }
+    
+    // Set start time if not exists
+    if (!localStorage.getItem(START_TIME_KEY)) {
+        localStorage.setItem(START_TIME_KEY, Date.now());
+        startTime = Date.now();
+    }
+    
+    // Start tracking
+    startTimeTracking();
+    startCountdown();
+}
+
+// Track time across tab visibility changes
+function startTimeTracking() {
+    timeTrackingInterval = setInterval(() => {
+        const now = Date.now();
+        const timeSinceStart = now - startTime;
+        const sessionTime = totalTimeElapsed + timeSinceStart;
+        
+        // Update display
+        updateTimeDisplay(sessionTime);
+        
+        // Check if total time exceeds countdown
+        if (sessionTime >= COUNTDOWN_DURATION) {
+            expireTimer();
+        }
+    }, 1000);
+}
+
+// Update time display
+function updateTimeDisplay(milliseconds) {
+    const hours = Math.floor(milliseconds / 3600000);
+    const minutes = Math.floor((milliseconds % 3600000) / 60000);
+    const seconds = Math.floor((milliseconds % 60000) / 1000);
+    
+    document.getElementById('tabTimeDisplay').textContent = 
+        `Total time: ${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+}
+
+// Handle visibility changes
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        // Tab hidden - save elapsed time
+        const timeSinceStart = Date.now() - startTime;
+        totalTimeElapsed += timeSinceStart;
+        localStorage.setItem(TOTAL_TIME_KEY, totalTimeElapsed);
+    } else {
+        // Tab visible - reset start time
+        startTime = Date.now();
+        localStorage.setItem(START_TIME_KEY, startTime);
+    }
+});
+
+// Countdown timer
+function startCountdown() {
+    const countdown = document.getElementById("countdown");
+    
+    function tick() {
+        const now = Date.now();
+        const timeSinceStart = now - startTime;
+        const currentTotalTime = totalTimeElapsed + timeSinceStart;
+        const remainingTime = Math.max(0, COUNTDOWN_DURATION - currentTotalTime);
+        
+        if (remainingTime > 0) {
+            const m = Math.floor(remainingTime / 60000);
+            const s = Math.floor((remainingTime % 60000) / 1000);
+            const ms = remainingTime % 1000;
+
+            countdown.textContent =
+                `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}.${String(ms).padStart(3,"0")}`;
+
+            requestAnimationFrame(tick);
+        } else {
+            expireTimer();
+        }
+    }
+
+    tick();
+}
+
+// Expire timer and show blackout
+function expireTimer() {
+    localStorage.setItem(TIMER_KEY, 'true');
+    showBlackout();
+    clearInterval(timeTrackingInterval);
+}
+
+// Show blackout screen
+function showBlackout() {
+    document.body.classList.add("blackout");
+    document.getElementById('revealContainer').style.opacity = '1';
+    document.getElementById('revealContainer').style.pointerEvents = 'all';
+    document.getElementById('mainContainer').style.opacity = '0';
+}
+
+// Clear storage (for testing)
+function clearTimerStorage() {
+    localStorage.removeItem(TIMER_KEY);
+    localStorage.removeItem(START_TIME_KEY);
+    localStorage.removeItem(TOTAL_TIME_KEY);
+}
+
+// Initialize on load
+initializeState();
+
+// document.addEventListener('keydown', (e) => {
+//     if (e.ctrlKey && e.shiftKey && e.key === 'R') {
+//         clearTimerStorage();
+//         location.reload();
+//     }
+// });
+</script>
+
+</body>
+</html>
